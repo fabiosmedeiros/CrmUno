@@ -2,6 +2,7 @@
 using CrmUno.Identity.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -23,10 +24,14 @@ namespace CrmUno.Identity.API.Controllers
         private readonly AppSettings _appSettings;
 
 
-        public IdentityController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public IdentityController(
+            SignInManager<IdentityUser> signInManager, 
+            UserManager<IdentityUser> userManager,
+            IOptions<AppSettings> appSettings)
         {
             this._signInManager = signInManager;
             this._userManager = userManager;
+            this._appSettings = appSettings.Value;
         }
 
 
